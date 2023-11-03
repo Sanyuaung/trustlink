@@ -11,17 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('working_experience', function (Blueprint $table) {
+        Schema::create('working_experiences', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('employee_id');
-            $table->string('company_name');
-            $table->string('job_title');
-            $table->date('start_date');
+            $table->string('company_name')->nullable();
+            $table->string('job_title')->nullable();
+            $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->string('department');
+            $table->string('department')->nullable();
             $table->string('project_link')->nullable();
             $table->timestamps();
-            $table->foreign('employee_id')->references('id')->on('employees');
+
+            $table->foreign('employee_id')  // Define the foreign key constraint once
+                ->references('id')
+                ->on('employees')
+                ->onDelete('cascade');
         });
     }
 
